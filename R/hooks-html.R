@@ -119,7 +119,7 @@ hook_scianimator = function(x, options) {
       $("#%s").scianimator({
           "images": imgs,
           "delay": %s,
-          "controls": ["first", "previous", "play", "next", "last", "loop", "speed"],
+          "controls": ["none"],
       });
       $("#%s").scianimator("play");
     });
