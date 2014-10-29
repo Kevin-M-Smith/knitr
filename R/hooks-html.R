@@ -130,6 +130,42 @@ hook_scianimator = function(x, options) {
           options$interval * 1000, id)
 }
 
+# use SciAnimator to create animations
+#' @rdname hook_animation
+#' @export
+hook_scianimator_controls = function(x, options) {
+  x = c(sans_ext(x), file_ext(x))
+  fig.num = options$fig.num
+  base = opts_knit$get('base.url') %n% ''
+
+  # write the div and js code here
+  id = gsub('[^[:alnum:]]', '_', options$label)
+  sprintf('
+<div class="scianimator">
+<div id="%s" style="display: inline-block;">
+</div>
+</div>
+<script type="text/javascript">
+  (function($) {
+    $(document).ready(function() {
+      var imgs = Array(%s);
+      for (i=0; ; i++) {
+        if (i == imgs.length) break;
+        imgs[i] = "%s%s" + (i + 1) + ".%s";
+      }
+      $("#%s").scianimator({
+          "images": imgs,
+          "delay": %s,
+          "controls": ['previous', 'play', 'next'],
+      });
+      $("#%s").scianimator("play");
+    });
+  })(jQuery);
+</script>
+',
+          id, fig.num, base, sub(str_c(fig.num, '$'), '', x[1]), x[2], id,
+          options$interval * 1000, id)
+}
 
 # use the R2SWF package to create Flash animations
 #' @rdname hook_animation
