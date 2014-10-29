@@ -156,7 +156,7 @@ hook_scianimator_controls = function(x, options) {
       $("#%s").scianimator({
           "images": imgs,
           "delay": %s,
-          "controls": ['previous', 'play', 'next'],
+          "controls": ["previous", "play", "next"],
       });
       $("#%s").scianimator("play");
     });
